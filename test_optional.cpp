@@ -1275,7 +1275,7 @@ TEST(nested_optional)
    assert (o3);
    assert (*o3);
    assert (!**o3);
-}
+};
 
 //// constexpr tests
 
