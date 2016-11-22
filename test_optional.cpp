@@ -111,16 +111,19 @@ TEST(disengaged_ctor)
     assert (o1 == tr2::optional<int>{});
     assert (!o1);
     assert (bool(o1) == false);
+    assert (o1.has_value() == false);
 
     assert (o2 == tr2::nullopt);
     assert (o2 == tr2::optional<int>{});
     assert (!o2);
     assert (bool(o2) == false);
+    assert (o2.has_value() == false);
 
     assert (o3 == tr2::nullopt);
     assert (o3 == tr2::optional<int>{});
     assert (!o3);
     assert (bool(o3) == false);
+    assert (o3.has_value() == false);
 
     assert (o1 == o2);
     assert (o2 == o1);
@@ -140,6 +143,7 @@ TEST(value_ctor)
   assert (oo1 == tr2::optional<Oracle>{v});
   assert (!!oo1);
   assert (bool(oo1));
+  assert (oo1.has_value());
   // NA: assert (oo1->s == sValueCopyConstructed);
   assert (oo1->s == sMoveConstructed);
   assert (v.s == sValueConstructed);
@@ -150,6 +154,7 @@ TEST(value_ctor)
   assert (oo2 == oo1);
   assert (!!oo2);
   assert (bool(oo2));
+  assert (oo2.has_value());
   // NA: assert (oo2->s == sValueMoveConstructed);
   assert (oo2->s == sMoveConstructed);
   assert (v.s == sMovedFrom);
@@ -162,6 +167,7 @@ TEST(value_ctor)
       assert (oo1 == tr2::optional<Oracle>{v});
       assert (!!oo1);
       assert (bool(oo1));
+      assert (oo1.has_value());
       assert (oo1->s == sValueCopyConstructed);
       assert (v.s == sValueConstructed);
 
@@ -171,6 +177,7 @@ TEST(value_ctor)
       assert (oo2 == oo1);
       assert (!!oo2);
       assert (bool(oo2));
+      assert (oo2.has_value());
       assert (oo2->s == sValueMoveConstructed);
       assert (v.s == sMovedFrom);
   }
@@ -264,11 +271,14 @@ TEST(copy_move_ctor_optional_int)
   assert (oj == oi);
   assert (oj == tr2::nullopt);
   assert (!bool(oj));
+  assert (!oj.has_value());
+
   
   oi = 1;
   tr2::optional<int> ok = oi;
   assert (!!ok);
   assert (bool(ok));
+  assert (ok.has_value());
   assert (ok == oi);
   assert (ok != oj);
   assert (*ok == 1);
@@ -1330,6 +1340,7 @@ void constexpr_test_disengaged()
   static_assert( !g1, "initialized!" );
   
   static_assert( bool(g1) == bool(g0), "ne!" );
+  static_assert( g1.has_value() == g0.has_value(), "ne!" );
   
   static_assert( g1 == g0, "ne!" );
   static_assert( !(g1 != g0), "ne!" );
