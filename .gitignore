@@ -1,0 +1,8 @@
+CMakeCache.txt
+CMakeFiles
+CTestTestfile.cmake
+Makefile
+Testing
+cmake_install.cmake
+test_optional
+test_type_traits
