@@ -281,6 +281,7 @@ union storage_t
 template <class T>
 union constexpr_storage_t
 {
+#ifndef __KLOCWORK__
     unsigned char dummy_;
     T value_;
 
@@ -290,6 +291,12 @@ union constexpr_storage_t
     constexpr constexpr_storage_t( Args&&... args ) : value_(constexpr_forward<Args>(args)...) {}
 
     ~constexpr_storage_t() = default;
+#else
+    constexpr constexpr_storage_t( trivial_init_t ) noexcept {}
+
+    template <class... Args>
+    constexpr constexpr_storage_t( Args&&... ) {}
+#endif
 };
 
 
