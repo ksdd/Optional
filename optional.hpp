@@ -639,16 +639,18 @@ public:
     return *this;
   }
   
-  // optional& operator=(const optional& rhs) noexcept {
-    // ref = rhs.ref;
-    // return *this;
-  // }
+#ifdef __KLOCWORK__
+   optional& operator=(const optional& rhs) noexcept {
+     ref = rhs.ref;
+     return *this;
+   }
   
-  // optional& operator=(optional&& rhs) noexcept {
-    // ref = rhs.ref;
-    // return *this;
-  // }
-  
+   optional& operator=(optional&& rhs) noexcept {
+     ref = rhs.ref;
+     return *this;
+   }
+#endif
+
   template <typename U>
   auto operator=(U&& rhs) noexcept
   -> typename enable_if
