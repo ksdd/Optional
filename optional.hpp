@@ -503,6 +503,7 @@ public:
   // 20.5.4.5, Observers
   
   explicit constexpr operator bool() const noexcept { return initialized(); }
+  constexpr bool has_value() const noexcept { return initialized(); }
   
   constexpr T const* operator ->() const {
     return TR2_OPTIONAL_ASSERTED_EXPRESSION(initialized(), dataptr());
@@ -604,6 +605,8 @@ public:
 
 # endif
 
+  // 20.6.3.6, modifiers
+  void reset() noexcept { clear(); }
 };
 
 
@@ -700,12 +703,19 @@ public:
   explicit constexpr operator bool() const noexcept {
     return ref != nullptr;
   }
+ 
+  constexpr bool has_value() const noexcept {
+    return ref != nullptr;
+  }
   
   template <class V>
   constexpr typename decay<T>::type value_or(V&& v) const
   {
     return *this ? **this : detail_::convert<typename decay<T>::type>(constexpr_forward<V>(v));
   }
+
+  // x.x.x.x, modifiers
+  void reset() noexcept { ref = nullptr; }
 };
 
 
